@@ -25,10 +25,6 @@ export default {
                     {
                         title: '列表',
                         name: 'List'
-                    },
-                    {
-                        title: '其他',
-                        name: 'Other'
                     }
                 ]
             }]
