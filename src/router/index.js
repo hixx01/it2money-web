@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: xiexing
+ * @Date: 2020-06-28 10:05:53
+ * @LastEditors: xiexing
+ * @LastEditTime: 2020-08-02 17:20:14
+ */
 import Vue from 'vue'
 import Router from 'vue-router'
 
@@ -16,11 +24,8 @@ export default () => new Router({
     redirect: '/list'
   }, {
     path: '/list',
+    title: '列表',
     name: 'List',
     component: () => import('../views/list/index.vue')
-  }, {
-    path: '/other',
-    name: 'Other',
-    component: () => import('../views/other/index.vue')
   }]
 })

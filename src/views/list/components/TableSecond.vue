@@ -4,79 +4,103 @@
  * @Author: xiexing
  * @Date: 2020-06-30 19:18:00
  * @LastEditors: xiexing
- * @LastEditTime: 2020-06-30 20:54:26
+ * @LastEditTime: 2020-08-02 21:35:53
 --> 
 <template>
     <div>
-        <el-table
-            :data="tableData"
-            border>
-            <el-table-column
-                prop="assetsName"
-                label="资产名称">
-                <template slot-scope="scope">
-                    <el-input v-model="scope.row.assetsName" @change="value => dataChange(value, scope, 'assetsName')"></el-input>
-                </template>
-            </el-table-column>
-            <el-table-column
-                prop="averageDaily"
-                label="日收益率均值">
-                <template slot-scope="scope">
-                    <el-input v-model="scope.row.averageDaily" @change="value => dataChange(value, scope, 'averageDaily')"></el-input>
-                </template>
-            </el-table-column>
-            <el-table-column
-                prop="deviationDaily"
-                label="日收益率标准差">
-                <template slot-scope="scope">
-                    <el-input v-model="scope.row.deviationDaily" @change="value => dataChange(value, scope, 'deviationDaily')"></el-input>
-                </template>
-            </el-table-column>
-        </el-table>
-        <el-button type="primary" style="{ margin: '20px' }" @click="addRowData">添加一行</el-button>
+        <thead>
+            <tr>
+                <th v-for="(item, index) in tableHeader" :key="index" class="header">
+                    <el-input v-model="item.title" placeholder="请输入内容" @change="dataChange"></el-input>
+                </th>
+            </tr>
+        </thead>
+        <tr v-for="(title, idx) in tableData" :key="idx">
+            <td v-for="(data, i) in title" :key="i" class="content">
+               <el-input v-model="data.title" placeholder="请输入内容" @change="dataChange"></el-input>
+            </td>
+        </tr>
+        <el-button style="{ margin: '20px' }" @click="addRowData">添加一项（一行一列）</el-button>
     </div>
 </template>
-
+ 
 <script>
 export default {
     name: 'TableSecond',
     data() {
         return {
-            tableData: [{
-                assetsName: '资产', // 资产名称
-                averageDaily: '', // 日收益率均值
-                deviationDaily: '' // 日收益率标准差
-                }, {
-                assetsName: '资产',
-                averageDaily: '',
-                deviationDaily: ''
-                }, {
-                assetsName: '资产',
-                averageDaily: '',
-                deviationDaily: ''
-            }]
+            // tableHeader: ['相关系数', '资产1', '资产2', '资产3'],
+            tableHeader: [{
+                title: '相关系数'
+            },{
+                title: '资产1'
+            },{
+                title: '资产2'
+            },{
+                title: '资产3'
+            }],
+            tableData: [
+                [{
+                  title: '资产1'
+                },{
+                  title: 0
+                },{
+                  title: 0
+                },{
+                  title: 0
+                }],
+                [{
+                  title: '资产2'
+                },{
+                  title: 0
+                },{
+                  title: 0
+                },{
+                  title: 0
+                }]
+            ]
         }
     },
     methods: {
         /**
-         * @description: 更改表格数据
-         * @param {String} value 更改后的数据
-         * @param {Object} scope 整行数据 
-         * @param {String} key key值 
-         * @return: 
-         */
-        dataChange(value, scope, key) {
-            this.tableData[scope.$index][key] = value
-        },
-        /**
          * @description: 增加一行
          */
         addRowData() {
-            this.tableData.push({
-                assetsName: '资产',
-                averageDaily: '',
-                deviationDaily: ''
+            this.tableHeader.push({
+                title: '资产'
             })
+            const dataLen = this.tableData[0].length
+            let itemLine = [{
+                title: '资产'
+            }]
+            for (let i = 1; i < dataLen; i++ ) {
+              itemLine.push({
+                  title: 0
+              })
+            }
+            this.tableData.push(itemLine)
+            this.tableData.forEach(item => {
+                item.push({
+                    title: 0
+                })
+            })
+            console.log('.........', this.tableData)
+        },
+        dataChange() {
+            let headerArr = []
+            let tableArr = []
+            this.tableHeader.forEach(item => {
+                headerArr.push(item.title)
+            })
+            this.tableData.forEach(table => {
+                let arr = []
+                table.forEach(item => {
+                    arr.push(item.title)
+                })
+                tableArr.push(arr)
+            })
+            tableArr.unshift(headerArr)
+            this.$emit('getSecondData', tableArr)
         }
     }
 }
@@ -85,5 +109,21 @@ export default {
 <style lang="css">
 .el-button  {
     margin-top: 20px;
+}
+.header {
+    width: 200px;
+    height: 50px;
+    border: 1px solid #EBEEF5;
+    padding: 0px 10px;
+}
+.content {
+    width: 200px;
+    height: 50px;
+    color: #909399;
+    font-size: 14px;
+    text-align: center;
+    line-height: 50px;
+    border: 1px solid #EBEEF5;
+    padding: 0px 10px;
 }
 </style>

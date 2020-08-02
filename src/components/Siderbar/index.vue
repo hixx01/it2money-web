@@ -1,32 +1,23 @@
 <template>
     <el-aside width="200px">
-        <el-menu :default-openeds="['0']" :router="true">
-            <el-submenu v-for="(item, i) in menuList" :key="i" :index="String(i)">
-                <template slot="title"><i :class="item.icon"></i>{{ item.title }}</template>
-                <el-menu-item-group v-for="(key, j) in item.child" :key="j">
-                    <el-menu-item :index="String(j)" :route="{ name: key.name }">
-                        {{ key.title }}
-                    </el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
+        <el-menu :router="true" :default-active="defaultActive">
+            <el-menu-item v-for="(item, index) in menuList" :index="String(index)" :key="index" :route="{ name: item.name }">
+                {{ item.title }}
+            </el-menu-item>
         </el-menu>
     </el-aside>
 </template>
 
 <script>
+// import Vue from 'vue'
 export default {
     name: 'Siderbar',
     data() {
         return {
+            defaultActive: '0',
             menuList: [{
-                title: '导航',
-                icon: 'el-icon-menu',
-                child: [
-                    {
-                        title: '列表',
-                        name: 'List'
-                    }
-                ]
+                title: '首页',
+                name: 'List'
             }]
         }
     }

@@ -4,7 +4,7 @@
  * @Author: xiexing
  * @Date: 2020-06-30 19:18:00
  * @LastEditors: xiexing
- * @LastEditTime: 2020-06-30 20:55:41
+ * @LastEditTime: 2020-08-02 20:59:42
 --> 
 <template>
     <div>
@@ -12,28 +12,28 @@
             :data="tableData"
             border>
             <el-table-column
-                prop="assetsName"
+                prop="name"
                 label="资产名称">
                 <template slot-scope="scope">
-                    <el-input v-model="scope.row.assetsName" @change="value => dataChange(value, scope, 'assetsName')"></el-input>
+                    <el-input v-model="scope.row.name" @change="value => dataChange(value, scope, 'name')"></el-input>
                 </template>
             </el-table-column>
             <el-table-column
-                prop="averageDaily"
+                prop="expect"
                 label="日收益率均值">
                 <template slot-scope="scope">
-                    <el-input v-model="scope.row.averageDaily" @change="value => dataChange(value, scope, 'averageDaily')"></el-input>
+                    <el-input v-model="scope.row.expect" @change="value => dataChange(value, scope, 'expect')"></el-input>
                 </template>
             </el-table-column>
             <el-table-column
-                prop="deviationDaily"
+                prop="stdev"
                 label="日收益率标准差">
                 <template slot-scope="scope">
-                    <el-input v-model="scope.row.deviationDaily" @change="value => dataChange(value, scope, 'deviationDaily')"></el-input>
+                    <el-input v-model="scope.row.stdev" @change="value => dataChange(value, scope, 'stdev')"></el-input>
                 </template>
             </el-table-column>
         </el-table>
-        <el-button type="primary" style="{ margin: '20px' }" @click="addRowData">添加一行</el-button>
+        <el-button style="{ margin: '20px' }" @click="addRowData">添加一行</el-button>
     </div>
 </template>
 
@@ -43,17 +43,17 @@ export default {
     data() {
         return {
             tableData: [{
-                assetsName: '资产', // 资产名称
-                averageDaily: '', // 日收益率均值
-                deviationDaily: '' // 日收益率标准差
+                name: '资产', // 资产名称
+                expect: '', // 日收益率均值
+                stdev: '' // 日收益率标准差
                 }, {
-                assetsName: '资产',
-                averageDaily: '',
-                deviationDaily: ''
+                name: '资产',
+                expect: '',
+                stdev: ''
                 }, {
-                assetsName: '资产',
-                averageDaily: '',
-                deviationDaily: ''
+                name: '资产',
+                expect: '',
+                stdev: ''
             }]
         }
     },
@@ -67,15 +67,16 @@ export default {
          */
         dataChange(value, scope, key) {
             this.tableData[scope.$index][key] = value
+            this.$emit('getDataFirst', this.tableData)
         },
         /**
          * @description: 增加一行
          */
         addRowData() {
             this.tableData.push({
-                assetsName: '资产',
-                averageDaily: '',
-                deviationDaily: ''
+                name: '资产',
+                expect: '',
+                stdev: ''
             })
         }
     }
