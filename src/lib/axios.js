@@ -4,7 +4,7 @@
  * @Author: xiexing
  * @Date: 2020-08-02 19:46:04
  * @LastEditors: xiexing
- * @LastEditTime: 2020-08-02 21:20:58
+ * @LastEditTime: 2020-08-13 16:12:51
  */
 /**
  * axios封装
@@ -39,8 +39,8 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
   if (response.status === 200) {
     const data = response.data
-    if (+data.respCode === 0) {
-      return Promise.resolve(data.respData)
+    if (+data.code === 0) {
+      return Promise.resolve(data.data)
     } else {
       return Promise.reject(data.errMsg || data.errorMsg)
     }

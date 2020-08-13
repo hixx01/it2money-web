@@ -4,7 +4,7 @@
  * @Author: xiexing
  * @Date: 2020-06-28 10:05:53
  * @LastEditors: xiexing
- * @LastEditTime: 2020-08-02 21:33:27
+ * @LastEditTime: 2020-08-13 16:16:58
 --> 
 <template>
   <Layout>
@@ -45,13 +45,15 @@ export default {
     },
     submit() {
       const { capitalAsset, correlationMatrix } = this
-      this.$http.post('/api/watchParameter ', {
+      this.$http.post('/api/portfolio', {
           capitalAsset,
           correlationMatrix
         }).then(res => {
-          console.log('>>>>>res', res)
+          if (res.length) {
+            this.result = res
+          }
         }).catch(e => {
-          console.log('>>>>>e', e)
+          this.$message.error(e || '计算出错了，请稍后再试');
         })
     }
   },

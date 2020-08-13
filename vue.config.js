@@ -4,7 +4,7 @@
  * @Author: xiexing
  * @Date: 2020-08-02 20:34:28
  * @LastEditors: xiexing
- * @LastEditTime: 2020-08-02 20:35:01
+ * @LastEditTime: 2020-08-05 16:36:58
  */
 let path = require('path')
 const resolve = (pathname = '') => {
@@ -17,6 +17,6 @@ module.exports = {
     .set('@',resolve('src'))
   },
   devServer: {
-    disableHostCheck: true,
+    disableHostCheck: true
   }
 }
